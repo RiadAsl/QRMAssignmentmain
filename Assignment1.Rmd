@@ -135,7 +135,7 @@ sum(movies$budget == 0 & movies$revenue > 0)
 
 In our case a movie gets a PR of Inf when its budget is recorded as 0 while its revenue is positive. Dividing by a budget of zero gives infinity. There are 23 movies in the data where this happens, for example Mr. Holland's Opus which has a budget of 0 but a revenue of about 106 million.
 
-Realistically no film is actually made with a budget of exactly zero, so these are almost certainly missing budget values that were entered as 0 in the database rather than being left blank. The Inf values are therefore a data quality problem and not a real finding about very profitable movies, which is why we replace them with NA in step d.
+Realistically no film is actually made with a budget of exactly zero, so these are almost certainly missing budget values that were entered as 0 in the database rather than being left blank. 
 
 *Step c*
 
