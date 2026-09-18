@@ -311,13 +311,19 @@ A random sample of 25 movies was drawn from the dataset. The mean PR in this sam
 *step c*
 
 ```{r}
-#WRITE YOUR CODE HERE
+set.seed(123)
+sample_means <- numeric(100)
+for (i in 1:100) {
+  s <- movies[sample(nrow(movies), 25), ]
+  sample_means[i] <- mean(s$PR, na.rm = TRUE)
+}
+sample_means
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+A for loop drew 100 independent random samples of 25 movies each and computed the mean PR in each. The resulting vector sample_means contains 100 sample means, printed above. Each entry is the mean PR of one sample.
 
 *step d*
 
