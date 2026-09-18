@@ -328,13 +328,26 @@ A for loop drew 100 independent random samples of 25 movies each and computed th
 *step d*
 
 ```{r}
-#WRITE YOUR CODE HERE
+summary(sample_means)
+sd(sample_means)
+hist(sample_means,
+     main = "Distribution of Sample Means (n = 25, 100 samples)",
+     xlab = "Sample mean of PR",
+     breaks = 20)
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+The 100 sample means have:
+
+Mean ≈ [value] — this should be close to the population mean from 3a.
+
+Standard deviation ≈ [value] — this is the standard error of the sample mean.
+
+Shape: approximately bell-shaped / normal, though with only 100 samples it may look slightly skewed or lumpy. Despite PR itself being heavily right-skewed, the distribution of the sample mean is much more symmetric — this is the Central Limit Theorem in action.
+
+
 
 *step e*
 
