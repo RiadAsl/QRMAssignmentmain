@@ -295,13 +295,15 @@ Assuming the dataset is the full population, the population mean of PR is [value
 *step b*
 
 ```{r}
-#WRITE YOUR CODE HERE
+#set.seed(123)   # for reproducibility
+movies_sample <- movies[sample(nrow(movies), 25), ]
+mean(movies_sample$PR, na.rm = TRUE)
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+A random sample of 25 movies was drawn from the dataset. The mean PR in this sample is [value from code]. Comparing it to the population mean of [value from 3a], the sample mean is [higher/lower] — this difference reflects sampling variability. Because only 25 of the 909 movies were sampled, the sample mean will typically deviate from the population mean, sometimes substantially given the heavy right-skew of PR.
 
 *step c*
 
