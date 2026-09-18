@@ -111,8 +111,8 @@ For each step, you should provide first all the code you used to answer the ques
 movies$PR <- movies$revenue / movies$budget
 mean(movies$PR, na.rm = TRUE)    # Inf
 median(movies$PR, na.rm = TRUE)  # 1.85
-max(movies$Pr, na.rm = TRUE)     # Inf
-min(movies$Pr, na.rm = TRUE)     # 0
+max(movies$PR, na.rm = TRUE)     # Inf
+min(movies$PR, na.rm = TRUE)     # 0
 
 ```
 
@@ -181,7 +181,7 @@ Write your formulated response here.
 
 ```{r}
 
-#WRITE YOUR CODE HERE
+
 
 ```
 
