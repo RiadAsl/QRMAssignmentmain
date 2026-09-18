@@ -337,13 +337,11 @@ hist(sample_means,
 
 ```
 
-**Your Answer:**
-
 The 100 sample means have:
 
-Mean ≈ [value] — this should be close to the population mean from 3a.
+Mean = this should be close to the population mean from 3a.
 
-Standard deviation ≈ [value] — this is the standard error of the sample mean.
+Standard deviation = this is the standard error of the sample mean.
 
 Shape: approximately bell-shaped / normal, though with only 100 samples it may look slightly skewed or lumpy. Despite PR itself being heavily right-skewed, the distribution of the sample mean is much more symmetric — this is the Central Limit Theorem in action.
 
