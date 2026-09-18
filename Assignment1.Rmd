@@ -76,7 +76,7 @@ Write your response here.
 
 ```{r}
 sapply(movies, class)
-table(movies$genre)
+str(movies$genre)
 ```
 
 **Your Answer:**
