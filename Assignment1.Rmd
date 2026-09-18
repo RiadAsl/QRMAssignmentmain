@@ -169,13 +169,14 @@ Write your formulated response here.
 
 ```{r}
 
-#WRITE YOUR CODE HERE
+mean(movies$PR >= 1, na.rm = TRUE)   # 0.6395
+sum(movies$PR >= 1, na.rm = TRUE)    # 463
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+A PR of at least one means that a movie earned back at least as much as it cost to make, so revenue was equal to or larger than budget. Out of the 724 movies that have a usable PR value, 463 have a PR of at least one. This gives a 64 percent of films at least broke even and the remaining 36 percent lost money.
 
 *Step f*
 
