@@ -141,13 +141,12 @@ Realistically no film is actually made with a budget of exactly zero, so these a
 
 ```{r}
 
-#WRITE YOUR CODE HERE
-
+sum(movies$budget == 0 & movies$revenue == 0)   # the amount of movies which get NA
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+"NA" means Not Available, which is how R marks an undefined or a missing value. Unlike Inf it does not represent infinity, it just means the value could not be determined.A movie gets a PR of NA when both its budget and its revenue are recorded as 0. This gives 0 divided by 0, which is mathematically undefined, so R cannot return a number and gives NaN instead. There are 162 movies in our data where this happens.
 
 *Step d*
 
