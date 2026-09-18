@@ -111,20 +111,21 @@ For each step, you should provide first all the code you used to answer the ques
 #movies$PR <- movies$revenue / movies$budget
 mean(movies$PR, na.rm = TRUE)    # Inf
 median(movies$PR, na.rm = TRUE)  # 1.85
-max(movies$PR, na.rm = TRUE)     # Inf
-min(movies$PR, na.rm = TRUE)     # 0
+max(movies$Pr, na.rm = TRUE)     # Inf
+min(movies$Pr, na.rm = TRUE)     # 0
 
 ```
 
 **Your Answer:**
+The profitability ratio has a median of 1.75 and a minimum of 0, but both the mean and the maximum are reported as Inf. The median tells us the typical movie earns about 1.75 times its budget back, while the mean and maximum cannot be interpreted yet because at least one observation has an infinite value.
 
-Write your formulated response here.
+
 
 *Step b*
 
 ```{r}
 
-#WRITE YOUR CODE HERE
+#
 
 ```
 
