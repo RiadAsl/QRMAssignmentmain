@@ -254,13 +254,14 @@ Assuming R is normally distributed with a mean of 107 and a standard deviation o
 *step c*
 
 ```{r}
-#WRITE YOUR CODE HERE
+mean(movies$runtime >= 90 & movies$runtime <= 120) 
+sd(movies$runtime)
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+Empirically P(90 <= R <= 120) = 0.667, compared to the 0.503 predicted in 2b. The assumed distribution therefore underestimates how concentrated these runtimes are in reality. The standard deviation is the most suspect assumption: the sample value is 19.91 rather than 22, so the assumed distribution is too wide. 
 
 *step d*
 
