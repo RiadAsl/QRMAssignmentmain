@@ -111,8 +111,8 @@ For each step, you should provide first all the code you used to answer the ques
 movies$PR <- movies$revenue / movies$budget
 mean(movies$PR, na.rm = TRUE)    # Inf
 median(movies$PR, na.rm = TRUE)  # 1.85
-max(movies$PR, na.rm = TRUE)     # Inf
-min(movies$PR, na.rm = TRUE)     # 0
+max(movies$Pr, na.rm = TRUE)     # Inf
+min(movies$Pr, na.rm = TRUE)     # 0
 
 ```
 
@@ -163,6 +163,7 @@ min(movies$PR, na.rm = TRUE)      # 0
 **Your Answer:**
 After recoding, the mean PR is about 10.97 across the 724 movies with a valid ratio. Taken literally this says the average movie earns almost eleven times its budget, but that figure is misleading: the mean sits far above the median of 1.75, which shows the distribution is strongly right-skewed. A handful of extreme outliers, most notably the documentary Tarnation with a budget of $218 and a revenue of roughly $1.16 million (PR ≈ 5330), pull the mean upward. The median is therefore the more informative measure of a typical movie's profitability.
 
+Write your formulated response here.
 
 *Step e*
 
@@ -180,7 +181,7 @@ Write your formulated response here.
 
 ```{r}
 
-
+#WRITE YOUR CODE HERE
 
 ```
 
