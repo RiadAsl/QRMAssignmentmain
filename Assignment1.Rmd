@@ -80,7 +80,7 @@ Write your response here.
 
 **Your Answer:**
 
-rite your response here.
+write your response here.
 
 
 3. A movie studio wants to know which types of movies are best at generating profit. The measure they use for this is the profitability ratio, which is defined as $$PR=\frac{Revenue}{Budget}.$$ Perform the following steps to provide the movie studio with an analysis which corresponds to their request:
@@ -97,7 +97,11 @@ For each step, you should provide first all the code you used to answer the ques
 *Step a*
 
 ```{r}
-#WRITE YOUR CODE HERE
+#movies$PR <- movies$revenue / movies$budget
+mean(movies$PR, na.rm = TRUE)    # Inf
+median(movies$PR, na.rm = TRUE)  # 1.85
+max(movies$PR, na.rm = TRUE)     # Inf
+min(movies$PR, na.rm = TRUE)     # 0
 
 ```
 
