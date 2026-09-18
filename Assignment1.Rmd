@@ -75,12 +75,21 @@ Write your response here.
 2. Which of the following types of variables are present in your data set? (i) nominal; (ii) ordinal; (iii); interval; (iv) ratio. If present, name one example of such a variable present in your data set.  \textbf{[4 points]} 
 
 ```{r}
-#WRITE YOUR CODE HERE
+sapply(movies, class)
+table(movies$genre)
 ```
 
 **Your Answer:**
 
-rite your response here.
+All four types of variables are present in our data set.
+
+Nominal: genre is nominal, since the categories (Drama, Comedy, Horror...) are only labels and there is no order to them. original_language, first_actor_gender and director_gender are nominal as well.
+
+Ordinal: release_month is ordinal. The months are coded from 1 to 12 so there is a clear order, but the numbers are basically labels for ordered categories and it would not make sense to say that month 8 is twice as much as month 4. We discussed whether vote_average belongs here since it is based on user ratings, but we decided to treat it as interval because the points are equally spaced out.
+
+Interval: release_year is interval. The differences between years are meaningful, so 2010 is 5 years later than 2005, but there is no true zero since the year 0 is just an random start of the calendar. This means a film from 2000 is not twice as old as one from 1000.
+
+Ratio: budget is ratio. It has a true zero point, so a budget of 0 means no money was spent, and ratios are meaningful, meaning a movie with a budget of 100 million really did cost twice as much as one with 50 million. revenue, runtime, vote_count and popularity are also ratio variable because of the same reasonss. 
 
 
 3. A movie studio wants to know which types of movies are best at generating profit. The measure they use for this is the profitability ratio, which is defined as $$PR=\frac{Revenue}{Budget}.$$ Perform the following steps to provide the movie studio with an analysis which corresponds to their request:
