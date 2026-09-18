@@ -290,7 +290,7 @@ mean(movies$PR, na.rm = TRUE)
 
 **Your Answer:**
 
-Write your formulated response here.
+Assuming the dataset is the full population, the population mean of PR is [value from code, e.g. 10.97]. This is the average profitability ratio across all movies with a valid PR value.
 
 *step b*
 
