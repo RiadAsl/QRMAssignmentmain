@@ -266,13 +266,15 @@ Empirically P(90 <= R <= 120) = 0.667, compared to the 0.503 predicted in 2b. Th
 *step d*
 
 ```{r}
-#WRITE YOUR CODE HERE
+notmale <- movies[movies$director_gender == "female", ]
+p_d <- mean(notmale$runtime >= 120, na.rm = TRUE)
+p_d
 
 ```
 
 **Your Answer:**
+Restricting to the 82 movies with a female director, P(R ≥ 120 | M′) ≈ 0.207 — about 21% of movies directed by women run 120 minutes or longer.
 
-Write your formulated response here.
 
 3 For this question, you will again use the profitability ratio PR. Make sure that PR is defined the same way as in question 3d of week 1. For this question, you will assume that your data set is the full population.  
 
