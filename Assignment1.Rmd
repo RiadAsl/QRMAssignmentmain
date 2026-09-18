@@ -125,13 +125,17 @@ The profitability ratio has a median of 1.75 and a minimum of 0, but both the me
 
 ```{r}
 
-#
+sum(movies$budget == 0 & movies$revenue > 0)
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+"Inf" stands for infinity in R. It appears when a positive number is divided by zero, which is mathematically not defined, so R returns Inf instead of an error.
+
+In our case a movie gets a PR of Inf when its budget is recorded as 0 while its revenue is positive. Dividing by a budget of zero gives infinity. There are 23 movies in the data where this happens, for example Mr. Holland's Opus which has a budget of 0 but a revenue of about 106 million.
+
+Realistically no film is actually made with a budget of exactly zero, so these are almost certainly missing budget values that were entered as 0 in the database rather than being left blank. The Inf values are therefore a data quality problem and not a real finding about very profitable movies, which is why we replace them with NA in step d.
 
 *Step c*
 
