@@ -70,7 +70,9 @@ length(unique(movies$index))          # 909 distinct movies = subjects
 
 **Your Answer:**
 
-Write your response here.
+Our data set has 909 observations and 19 variables. A subject is one single movie, released between 1990 and 2016, and each movie is identified by the variable index. Since there are 909 unique values of index, we have 909 subjects and every subject appears exactly once in the data. 
+
+The variables describe different aspects of each film. There is financial information (budget, revenue), how the audience received it (popularity, vote_average, vote_count), what the movie is about (genre, keywords, runtime, original_language), when it came out (release_date, split into release_year, release_month and release_day) and who was involved (first_actor, first_actor_gender, director_first_name, director_gender). Since index is only an identification number, we ccan say there are 18 variables plus one ID.
 
 2. Which of the following types of variables are present in your data set? (i) nominal; (ii) ordinal; (iii); interval; (iv) ratio. If present, name one example of such a variable present in your data set.  \textbf{[4 points]} 
 
