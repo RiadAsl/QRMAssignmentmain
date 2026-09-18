@@ -108,7 +108,7 @@ For each step, you should provide first all the code you used to answer the ques
 *Step a*
 
 ```{r}
-#movies$PR <- movies$revenue / movies$budget
+movies$PR <- movies$revenue / movies$budget
 mean(movies$PR, na.rm = TRUE)    # Inf
 median(movies$PR, na.rm = TRUE)  # 1.85
 max(movies$Pr, na.rm = TRUE)     # Inf
