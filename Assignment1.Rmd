@@ -243,13 +243,13 @@ In our data 780 directors are male and 82 are female, while 47 movies have a mis
 *step b*
 
 ```{r}
-#WRITE YOUR CODE HERE
+pnorm(120, mean = 107, sd = 22) - pnorm(90, mean = 107, sd = 22)
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+Assuming R is normally distributed with a mean of 107 and a standard deviation of 22, we standardise both bounds and take the difference of the cumulative probabilities. This gives = 0.503, so under these assumptions a bit over half of all movies would have a runtime between 90 and 120 minutes.
 
 *step c*
 
