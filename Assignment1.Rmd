@@ -229,13 +229,16 @@ d. Using your data, calculate $P(120 \leq R | M')$ \textbf{[2 points]}
 *step a*
 
 ```{r}
-#WRITE YOUR CODE HERE
+table(movies$director_gender, useNA = "ifany")
+mean(movies$director_gender == "male", na.rm = TRUE)     # 0.9049
+mean(movies$director_gender == "female", na.rm = TRUE)   # 0.0951
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+In our data 780 directors are male and 82 are female, while 47 movies have a missing value for director gender. Leaving the missing ones out we have 862 usable observations, so P(M) = 780/862 = 0.905.P(M') = 1 - 0.905 = 0.095. 
+
 
 *step b*
 
