@@ -216,7 +216,7 @@ One practical note: because of that skew, the raw boxplot will look almost like 
 
 **Your Answer**
 
-Our dataset is a sample of a larger population, as there are only 909 movies in it, while the number of films released worldwide between 1990 and 2016 is far larger, in the tens of thousands. The full population would be all movies released in the period 1990 to 2016.
+Write your formulated response here.
 
 
 2 Let M be the event that a movie director is male. Let R be the runtime of the movie. 
