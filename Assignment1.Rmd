@@ -180,14 +180,35 @@ A PR of at least one means that a movie earned back at least as much as it cost 
 *Step f*
 
 ```{r}
-
+boxplot(movies$PR,
+        main = "Distribution of the Profitability Ratio of Movies",
+        xlab = "All movies",
+        ylab = "Profitability ratio (revenue / budget)")
+summary(movies$PR)
 
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+## Step f
+```r
+boxplot(movies$PR,
+        main = "Distribution of the Profitability Ratio of Movies",
+        xlab = "All movies",
+        ylab = "Profitability ratio (revenue / budget)")
+summary(movies$PR)
+```
+
+Quartiles from your data: **Q1 = 0.52, Q2 (median) = 1.75, Q3 = 3.63, Q4 ends at the max = 5330.34**.
+
+Shape
+The boxplot is heavily right-skewed. The box itself (containing the middle 50% of movies) is squashed into a thin strip near the bottom of the plot, the lower whisker sits at 0, and there's a long trail of outlier points stretching far up above the box — a classic long right tail.
+
+Interpretation for the movie industry. 
+Most films only modestly recover their budget — a quarter don't even get back half of what they spent, and half return less than 1.75× their costs — while the industry's headline profits come from a small number of exceptional outliers (blockbusters or very low-budget hits) rather than typical, reliable returns. It's a high-risk business where the average is pulled up by rare extreme successes, not representative of what a typical film earns.
+
+One practical note: because of that skew, the raw boxplot will look almost like a flat line with dots above it. If you want it to be more visually readable you can add `log = "y"`, but if you do, mention in your answer that the zero values get dropped under a log transform.
 
 # Week 2 
 1 Is your dataset movies5.tsv the full population, or is it a sample of a larger population? If the latter, how would you describe the full population? \textbf{[4 points]} 
