@@ -365,13 +365,18 @@ The dataset contains 127 thriller movies with a mean vote_average of 5.84 and a 
 
 ```{r}
 
-
+t.test(thriller$vote_average, mu = 6.5, alternative = "less")
+qt(0.05, df = 126)   # critical value, -1.657
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+Step 1: H0: mu >= 6.5 against H1: mu < 6.5, with a significance level of alpha = 0.05. 
+Step 2: alpha = 0.05, the sample statistic is X_bar. We reject H0 for low values of this statistic.
+Step 3: Since sigma is unknown we standardise X_bar using the sample standard deviation, so the test statistic follows a t-distribution with n - 1 = 126 degrees of freedom under H0. We obtain  t_calc (5.84-6.5) / (0.93/sqrt(127)) = -8.04.
+Step 4: t_crti the critical value is -1.657. Thus, the rejection region is RR = (-inf, -1.657].
+Step 5: The t_calc is is in the range since -8.04 < -1.657, so we reject H0, the null hypothesis. The p-value is 2.75e-13, which is also far below alpha = 0.05. We can conclude that thriller movies are rated significantly worse than the average movie rating of 6.5, as the thriller average is 5.84 < 6.5. 
 
 2
 
