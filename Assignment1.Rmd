@@ -72,7 +72,7 @@ length(unique(movies$index))          # 909 distinct movies = subjects
 
 Our data set has 909 observations and 19 variables. A subject is one single movie, released between 1990 and 2016, and each movie is identified by the variable index. Since there are 909 unique values of index, we have 909 subjects and every subject appears exactly once in the data. 
 
-The variables describe different aspects of each film. There is financial information (budget, revenue), how the audience received it (popularity, vote_average, vote_count), what the movie is about (genre, keywords, runtime, original_language), when it came out (release_date, split into release_year, release_month and release_day) and who was involved (first_actor, first_actor_gender, director_first_name, director_gender). Since index is only an identification number, we ccan say there are 18 variables plus one ID.
+The variables describe different aspects of each film. There is financial information (budget, revenue), how the audience received it (popularity, vote_average, vote_count), what the movie is about (genre, keywords, runtime, original_language), when it came out (release_date, split into release_year, release_month and release_day) and who was involved (first_actor, first_actor_gender, director_first_name, director_gender).There are 19 variables.
 
 2. Which of the following types of variables are present in your data set? (i) nominal; (ii) ordinal; (iii); interval; (iv) ratio. If present, name one example of such a variable present in your data set.  \textbf{[4 points]} 
 
@@ -85,13 +85,13 @@ str(movies$genre)
 
 All four types of variables are present in our data set.
 
-Nominal: genre is nominal, since the categories (Drama, Comedy, Horror...) are only labels and there is no order to them. original_language, first_actor_gender and director_gender are nominal as well.
+Nominal: genre is nominal, since the categories (Drama, Comedy, Horror...) are only labels and there is no order to them. 
 
-Ordinal: release_month is ordinal. The months are coded from 1 to 12 so there is a clear order, but the numbers are basically labels for ordered categories and it would not make sense to say that month 8 is twice as much as month 4. We discussed whether vote_average belongs here since it is based on user ratings, but we decided to treat it as interval because the points are equally spaced out.
+Ordinal: release_month is ordinal. The months are coded from 1 to 12 so there is a clear order, but the numbers are basically labels for ordered categories and it would not make sense to say that month 8 is twice as much as month 4. 
 
 Interval: release_year is interval. The differences between years are meaningful, so 2010 is 5 years later than 2005, but there is no true zero since the year 0 is just an random start of the calendar. This means a film from 2000 is not twice as old as one from 1000.
 
-Ratio: budget is ratio. It has a true zero point, so a budget of 0 means no money was spent, and ratios are meaningful, meaning a movie with a budget of 100 million really did cost twice as much as one with 50 million. revenue, runtime, vote_count and popularity are also ratio variable because of the same reasonss.
+Ratio: An example of a ratio is the runtime. It has a true zero point, since a runtime of 0 would mean the film has no length at all, and ratios are meaningful, so a 120 minute movie really is twice as long as a 60 minute one.
 
 
 3. A movie studio wants to know which types of movies are best at generating profit. The measure they use for this is the profitability ratio, which is defined as $$PR=\frac{Revenue}{Budget}.$$ Perform the following steps to provide the movie studio with an analysis which corresponds to their request:
@@ -111,13 +111,13 @@ For each step, you should provide first all the code you used to answer the ques
 movies$PR <- movies$revenue / movies$budget
 mean(movies$PR, na.rm = TRUE)    # Inf
 median(movies$PR, na.rm = TRUE)  # 1.85
-max(movies$Pr, na.rm = TRUE)     # Inf
-min(movies$Pr, na.rm = TRUE)     # 0
+max(movies$PR, na.rm = TRUE)     # Inf
+min(movies$PR, na.rm = TRUE)     # 0
 
 ```
 
 **Your Answer:**
-The profitability ratio has a median of 1.75 and a minimum of 0, but both the mean and the maximum are reported as Inf. The median tells us the typical movie earns about 1.75 times its budget back, while the mean and maximum cannot be interpreted yet because at least one observation has an infinite value.
+The profitability ratio has a median of 1.85 and a minimum of 0, but both the mean and the maximum are reported as Inf. The median tells us the typical movie earns about 1.85 times its budget back, while the mean and maximum cannot be interpreted yet because at least one observation has an infinite value.
 
 
 
@@ -161,9 +161,8 @@ min(movies$PR, na.rm = TRUE)      # 0
 ```
 
 **Your Answer:**
-After recoding, the mean PR is about 10.97 across the 724 movies with a valid ratio. Taken literally this says the average movie earns almost eleven times its budget, but that figure is misleading: the mean sits far above the median of 1.75, which shows the distribution is strongly right-skewed. A handful of extreme outliers, most notably the documentary Tarnation with a budget of $218 and a revenue of roughly $1.16 million (PR ≈ 5330), pull the mean upward. The median is therefore the more informative measure of a typical movie's profitability.
+After recoding, the mean PR is about 10.97 across the 724 movies with a valid ratio. Taken literally this says the average movie earns almost eleven times its budget, but that figure is misleading: the mean sits far above the median of 1.75, which shows the distribution is strongly right-skewed. A handful of extreme outliers, most notably the documentary Tarnation with a budget of 218 dollars and a revenue of roughly 1.16 million dollars (PR of about 5330), pull the mean upward. The median is therefore the more informative measure of a typical movie's profitability.
 
-Write your formulated response here.
 
 *Step e*
 
@@ -176,7 +175,7 @@ sum(movies$PR >= 1, na.rm = TRUE)    # 463
 
 **Your Answer:**
 
-A PR of at least one means that a movie earned back at least as much as it cost to make, so revenue was equal to or larger than budget. Out of the 724 movies that have a usable PR value, 463 have a PR of at least one. This gives a 64 percent of films at least broke even and the remaining 36 percent lost money.
+A PR of at least one means that a movie earned back at least as much as it cost to make, so revenue was equal to or larger than budget. Out of the 724 movies that have a usable PR value, 463 have a PR of at least one. This gives fraction of 0.64,so 64 percent of films at least broke even and the remaining 36 percent lost money.
 
 *Step f*
 
