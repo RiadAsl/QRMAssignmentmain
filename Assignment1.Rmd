@@ -351,19 +351,20 @@ b. According to IMDB, the average movie is rated with a 6.5. Using your data, te
 *step a*
 
 ```{r}
-#WRITE YOUR CODE HERE
+thriller <- movies [movies$genre == "Thriller" & !is.na(movies$genre), ]
+t.test(thriller$vote_average, conf.level = 0.99)
 
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+The dataset contains 127 thriller movies with a mean vote_average of 5.84 and a standard deviation of 0.93.  Since the population standard deviation is unknown we use the t-distribution with 126 degrees of freedom. Thus the 99 percent confidence interval for the mean vote_average of thriller movies is equal to [5.62, 6.05].
 
 *step b*
 
 ```{r}
-#WRITE YOUR CODE HERE
+
 
 
 ```
