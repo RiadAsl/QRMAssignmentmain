@@ -446,49 +446,185 @@ d. Now, create a new data frame which is a random subsample of n=100 of your ful
 *step a*
 
 ```{r}
-#WRITE YOUR CODE HERE
+top3 <- names(sort(table(movies$genre), decreasing = TRUE))[1:3]
+movies$genre2 <- ifelse(movies$genre %in% top3, movies$genre, "Other")
+table(movies$genre2)
 
 
 ```
 
-**Your Answer:**
+The three most popular genres are Drama (455), Comedy (195), and Thriller (127). All other genres. Are grouped into a single other category, which contains 132 movies. The resulting frequency table for genre2 is: Drama 455, Comedy 195, Other 132, Thriller 127.
 
 Write your formulated response here.
 
 *step b*
 
 ```{r}
-#WRITE YOUR CODE HERE
+means <- aggregate(PR ~ genre2, data = movies, FUN = mean, na.rm = TRUE)
+means
+
+plot(1:nrow(means), means$PR, xaxt = "n",
+     xlab = "Genre", ylab = "Mean profitability ratio (PR)",
+     main = "Mean PR by Genre",
+     pch = 19)
+axis(1, at = 1:nrow(means), labels = means$genre2)
 
 
 ```
 
-**Your Answer:**
-
-Write your formulated response here.
-
+Drama has by far the highest mean PR 18.6, while Comedy has the lowest 3.1, with Thriller 4.6 and other 3.5 in between. Drama's high mean is driven by extreme outliers within that genre a small number of very profitable dramas, consistent with the strong right-skew seen throughout the PR variable rather than by dramas being reliably more profitable on average.
 
 *step c*
 
 ```{r}
-#WRITE YOUR CODE HERE
+library(dplyr)
+
+summary_stats <- movies %>%
+  group_by(genre2) %>%
+  summarise(
+    n = sum(!is.na(PR)),
+    mean_PR = mean(PR, na.rm = TRUE),
+    se = sd(PR, na.rm = TRUE) / sqrt(n),
+    lower = mean_PR - qt(0.975, n - 1) * se,
+    upper = mean_PR + qt(0.975, n - 1) * se
+  )
+summary_stats
+
+plot(1:nrow(summary_stats), summary_stats$mean_PR, xaxt = "n",
+     ylim = c(min(summary_stats$lower), max(summary_stats$upper)),
+     xlab = "Genre", ylab = "Mean profitability ratio (PR)",
+     main = "Mean PR by Genre, with 95% CI",
+     pch = 19)
+axis(1, at = 1:nrow(summary_stats), labels = summary_stats$genre2)
+arrows(1:nrow(summary_stats), summary_stats$lower,
+       1:nrow(summary_stats), summary_stats$upper,
+       angle = 90, code = 3, length = 0.05)
 
 
 ```
-
-**Your Answer:**
-
-Write your formulated response here.
+The 95% confidence intervals are: Comedy (2.10, 4.13), Drama (−11.04, 48.34), Other (2.17, 4.77), Thriller (2.41, 6.79). Drama's interval is enormously wide and even dips below zero, reflecting the huge variance in PR within that genre driven by a few extreme high-profit outliers. The other three genres have comparatively narrow, more stable intervals.
 
 *step d*
 
 ```{r}
-#WRITE YOUR CODE HERE
+set.seed(1)
+movies_sub100 <- movies[sample(nrow(movies), 100), ]
+
+summary_stats_sub <- movies_sub100 %>%
+  group_by(genre2) %>%
+  summarise(
+    n = sum(!is.na(PR)),
+    mean_PR = mean(PR, na.rm = TRUE),
+    se = sd(PR, na.rm = TRUE) / sqrt(n),
+    lower = mean_PR - qt(0.975, n - 1) * se,
+    upper = mean_PR + qt(0.975, n - 1) * se
+  )
+summary_stats_sub
+
+plot(1:nrow(summary_stats_sub), summary_stats_sub$mean_PR, xaxt = "n",
+     ylim = c(min(summary_stats_sub$lower), max(summary_stats_sub$upper)),
+     xlab = "Genre", ylab = "Mean profitability ratio (PR)",
+     main = "Mean PR by Genre, Subsample n = 100",
+     pch = 19)
+axis(1, at = 1:nrow(summary_stats_sub), labels = summary_stats_sub$genre2)
+arrows(1:nrow(summary_stats_sub), summary_stats_sub$lower,
+       1:nrow(summary_stats_sub), summary_stats_sub$upper,
+       angle = 90, code = 3, length = 0.05)
 
 
 ```
+## Week 3, Question 3
+
+### step a
+```{r}
+top3 <- names(sort(table(movies$genre), decreasing = TRUE))[1:3]
+movies$genre2 <- ifelse(movies$genre %in% top3, movies$genre, "Other")
+table(movies$genre2)
+```
 
 **Your Answer:**
+
+The three most popular genres are **Drama (455)**, **Comedy (195)**, and **Thriller (127)**. All other genres (Action, Adventure, Documentary, Horror, etc.) are grouped into a single **"Other"** category, which contains 132 movies. The resulting frequency table for `genre2` is: Drama 455, Comedy 195, Other 132, Thriller 127.
+
+### step b
+```{r}
+means <- aggregate(PR ~ genre2, data = movies, FUN = mean, na.rm = TRUE)
+means
+
+plot(1:nrow(means), means$PR, xaxt = "n",
+     xlab = "Genre", ylab = "Mean profitability ratio (PR)",
+     main = "Mean PR by Genre",
+     pch = 19)
+axis(1, at = 1:nrow(means), labels = means$genre2)
+```
+
+**Your Answer:**
+
+**Drama** has by far the highest mean PR (≈18.6), while **Comedy** has the lowest (≈3.1), with Thriller (≈4.6) and Other (≈3.5) in between. Drama's high mean is driven by extreme outliers within that genre (a small number of very profitable dramas, consistent with the strong right-skew seen throughout the PR variable) rather than by dramas being reliably more profitable on average.
+
+### step c
+```{r}
+library(dplyr)
+
+summary_stats <- movies %>%
+  group_by(genre2) %>%
+  summarise(
+    n = sum(!is.na(PR)),
+    mean_PR = mean(PR, na.rm = TRUE),
+    se = sd(PR, na.rm = TRUE) / sqrt(n),
+    lower = mean_PR - qt(0.975, n - 1) * se,
+    upper = mean_PR + qt(0.975, n - 1) * se
+  )
+summary_stats
+
+plot(1:nrow(summary_stats), summary_stats$mean_PR, xaxt = "n",
+     ylim = c(min(summary_stats$lower), max(summary_stats$upper)),
+     xlab = "Genre", ylab = "Mean profitability ratio (PR)",
+     main = "Mean PR by Genre, with 95% CI",
+     pch = 19)
+axis(1, at = 1:nrow(summary_stats), labels = summary_stats$genre2)
+arrows(1:nrow(summary_stats), summary_stats$lower,
+       1:nrow(summary_stats), summary_stats$upper,
+       angle = 90, code = 3, length = 0.05)
+```
+
+**Your Answer:**
+
+The 95% confidence intervals are: Comedy (2.10, 4.13), Drama (−11.04, 48.34), Other (2.17, 4.77), Thriller (2.41, 6.79). Drama's interval is enormously wide and even dips below zero, reflecting the huge variance in PR within that genre driven by a few extreme high-profit outliers. The other three genres have comparatively narrow, more stable intervals.
+
+### step d
+```{r}
+set.seed(1)
+movies_sub100 <- movies[sample(nrow(movies), 100), ]
+
+summary_stats_sub <- movies_sub100 %>%
+  group_by(genre2) %>%
+  summarise(
+    n = sum(!is.na(PR)),
+    mean_PR = mean(PR, na.rm = TRUE),
+    se = sd(PR, na.rm = TRUE) / sqrt(n),
+    lower = mean_PR - qt(0.975, n - 1) * se,
+    upper = mean_PR + qt(0.975, n - 1) * se
+  )
+summary_stats_sub
+
+plot(1:nrow(summary_stats_sub), summary_stats_sub$mean_PR, xaxt = "n",
+     ylim = c(min(summary_stats_sub$lower), max(summary_stats_sub$upper)),
+     xlab = "Genre", ylab = "Mean profitability ratio (PR)",
+     main = "Mean PR by Genre, Subsample n = 100",
+     pch = 19)
+axis(1, at = 1:nrow(summary_stats_sub), labels = summary_stats_sub$genre2)
+arrows(1:nrow(summary_stats_sub), summary_stats_sub$lower,
+       1:nrow(summary_stats_sub), summary_stats_sub$upper,
+       angle = 90, code = 3, length = 0.05)
+```
+
+With only 100 movies (roughly 16 Comedy, 38 Drama, 13 Thriller, 7 Other), every confidence interval is noticeably wider than in step c, since standard error scales with 1/√n and each group now has far fewer observations. This is a direct illustration of a core statistical principle: smaller samples give less precise estimates, so the same true population means are now bracketed by much less certain intervals.
+
+---
+
+Small note: your exact numbers in step d will differ depending on your random seed, so present them as illustrative rather than copying mine verbatim — run the code and report what you actually get. That's Week 3 complete; want to move on to Week 4's regression questions next?
+
 
 Write your formulated response here.
 
