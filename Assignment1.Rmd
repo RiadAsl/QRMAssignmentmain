@@ -375,7 +375,7 @@ qt(0.05, df = 126)   # critical value, -1.657
 Step 1: H0: mu >= 6.5 against H1: mu < 6.5, with a significance level of alpha = 0.05. 
 Step 2: alpha = 0.05, the sample statistic is X_bar. We reject H0 for low values of this statistic.
 Step 3: Since sigma is unknown we standardise X_bar using the sample standard deviation, so the test statistic follows a t-distribution with n - 1 = 126 degrees of freedom under H0. We obtain  t_calc (5.84-6.5) / (0.93/sqrt(127)) = -8.04.
-Step 4: t_crti the critical value is -1.657. Thus, the rejection region is RR = (-inf, -1.657].
+Step 4: t_crit the critical value is -1.657. Thus, the rejection region is RR = (-inf, -1.657].
 Step 5: The t_calc is is in the range since -8.04 < -1.657, so we reject H0, the null hypothesis. The p-value is 2.75e-13, which is also far below alpha = 0.05. We can conclude that thriller movies are rated significantly worse than the average movie rating of 6.5, as the thriller average is 5.84 < 6.5. 
 
 2
@@ -389,26 +389,26 @@ d. Assume that the variance of PR for movies with a male lead actor in your data
 *step a*
 
 ```{r}
-#WRITE YOUR CODE HERE
+table(movies$first_actor_gender)
 
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+In our sample 223 movies had a female lead actor and 649 had a male lead actor.This shows a very high disparity of gender in lead actors with msot being male. 
 
 *step b*
 
 ```{r}
-#WRITE YOUR CODE HERE
+prop.test(649, 872, p=0.5) 
 
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+Null Hypothesis H0 = 0.5 , H1 = pi is not equal to 0.5 (two-sided), significance level of of alpha =0.05. 649 + 223 = 872. Then 649 have a male lead, so the sample proportion is p = 649/872 = 0.744. Testing this against 0.5 with prop.test gives a test statistic of X-squared = 206.5 with 1 degree of freedom and a p-value smaller than '2.2e-16'. Since the p-value is far below = 0.05 we reject H0. The chance that a lead actor is male is clearly not equal to the chance that the lead actor is female, and the 95 percent confidence interval of [0.715, 0.772].   
 
 
 *step c*
