@@ -432,14 +432,20 @@ The variance of PR for movies with a male lead is 69.36, and for movies with a f
 *step d*
 
 ```{r}
-#WRITE YOUR CODE HERE
+s2_f <- var(movies$PR[movies$first_actor_gender == "female"], na.rm = TRUE)
+n_f  <- sum(!is.na(movies$PR[movies$first_actor_gender == "female"]))
+chi  <- (n_f - 1) * s2_f / 69.36
+chi                                   
+qchisq(c(0.025, 0.975), df = n_f - 1)      
+2 * (1 - pchisq(chi, df = n_f - 1)) 
 
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+H0: sigma^2 = 69.36, H1: sigma^2 is not equal to 69.36, where sigma^2 is the variance of PR for movies with a female lead actor and 69.36 is the known population variance for movies with a male lead. We use alpha = 0.05 as the chosen value. The test statistic is chi = (n - 1) * s^2 / sigma0^2, which under H0 follows a chi-squared distribution with n - 1 = 177 degrees of freedom. With n = 178 female lead movies and s^2 = 159467.66 we get chi2 = 177 * 159467.66 / 69.36 = 406956.7.
+The critical values that we get are 142.05 and 215.73, so the rejection region is everything below 142.05 or above 215.73. Our test statistic of 406956.7 is far above the upper critical value, and the p-value is essentially 0 (smaller than 2.2e-16). We therefore reject H0 and conclude that the variance of PR for movies with a female lead differs from the variance for movies with a male lead.
 
 3
 
