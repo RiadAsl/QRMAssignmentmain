@@ -414,14 +414,14 @@ Null Hypothesis H0 = 0.5 , H1 = pi is not equal to 0.5 (two-sided), significance
 *step c*
 
 ```{r}
-#WRITE YOUR CODE HERE
+var(movies$PR[movies$first_actor_gender == "male"], na.rm = TRUE)  var(movies$PR[movies$first_actor_gender == "female"], na.rm = TRUE)
 
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+The variance of PR for movies with a male lead is 69.36, and for movies with a female lead actor it is 159467.66. 
 
 *step d*
 
