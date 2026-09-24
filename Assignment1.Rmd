@@ -324,11 +324,13 @@ hist(sample_means,
 
 ```
 
+**Your Answer:**
+
 The 100 sample means have:
 
-Mean = this should be close to the population mean from 3a.
+Mean = [value] — this should be close to the population mean from 3a.
 
-Standard deviation = this is the standard error of the sample mean.
+Standard deviation ≈ [value] — this is the standard error of the sample mean.
 
 Shape: approximately bell-shaped / normal, though with only 100 samples it may look slightly skewed or lumpy. Despite PR itself being heavily right-skewed, the distribution of the sample mean is much more symmetric — this is the Central Limit Theorem in action.
 
@@ -338,7 +340,11 @@ Shape: approximately bell-shaped / normal, though with only 100 samples it may l
 
 **Your Answer:**
 
+<<<<<<< Updated upstream
 By the CLT, the sampling distribution of the mean should be approximately Normal(true mean  = 10.97, standard deviation = population SD / √25). With a population SD of =198, that gives an expected standard deviation of the sample mean of =39.6. Comparing to part d: the simulated mean (=7.8) is somewhat below the CLT-predicted 10.97, and the simulated SD (=29.9) is smaller than the predicted 39.6. 
+=======
+By the CLT, the sampling distribution of the mean should be approximately Normal(μ = 10.97, σ = population SD / √25). With a population SD of ≈198, that gives an expected standard deviation of the sample mean of ≈39.6. Comparing to part d: the simulated mean (≈7.8) is somewhat below the CLT-predicted 10.97, and the simulated SD (≈29.9) is smaller than the predicted 39.6. More importantly, the simulated distribution is visibly skewed rather than normal-shaped. This is expected: the CLT's normal approximation requires either a genuinely normal population or a "sufficiently large" n, and PR's population distribution is extremely right-skewed with rare massive outliers — n = 25 is not large enough here to fully wash out that skew, so the sampling distribution of the mean still shows some skew and won't perfectly match the CLT's normal prediction in a finite simulation of only 100 samples.
+>>>>>>> Stashed changes
 
 # Week 3 
 
