@@ -395,7 +395,7 @@ table(movies$first_actor_gender)
 
 **Your Answer:**
 
-In our sample 223 movies had a female lead actor and 649 had a male lead actor.This shows a very high disparity of gender in lead actors with msot being male. 
+In our sample 223 movies had a female lead actor and 649 had a male lead actor. The remaining 37 movies have a missing value for first_actor_gender, so together this accounts for all 909 movies.
 
 *step b*
 
@@ -407,14 +407,14 @@ prop.test(649, 872, p=0.5)
 
 **Your Answer:**
 
-Null Hypothesis H0 = 0.5 , H1 = pi is not equal to 0.5 (two-sided), significance level of of alpha =0.05. 649 + 223 = 872. Then 649 have a male lead, so the sample proportion is p = 649/872 = 0.744. Testing this against 0.5 with prop.test gives a test statistic of X-squared = 206.5 with 1 degree of freedom and a p-value smaller than '2.2e-16'. Since the p-value is far below = 0.05 we reject H0. The chance that a lead actor is male is clearly not equal to the chance that the lead actor is female, and the 95 percent confidence interval of [0.715, 0.772].   
+Null Hypothesis H0 = 0.5 , H1 = pi is not equal to 0.5 (two-sided), significance level of of alpha =0.05. 649 + 223 = 872. Then 649 have a male lead, so the sample proportion is p = 649/872 = 0.744. Testing this against 0.5 with prop.test gives a test statistic of X-squared = 206.5 with 1 degree of freedom and a p-value smaller than 2.2e-16. Since the p-value is far below alpha = 0.05 we reject H0. The chance that a lead actor is male is clearly not equal to the chance that the lead actor is female, and the 95 percent confidence interval of [0.715, 0.772] shows that male leads are far more common in our data.   
 
 
 *step c*
 
 ```{r}
-var(movies$PR[movies$first_actor_gender == "male"], na.rm = TRUE)  var(movies$PR[movies$first_actor_gender == "female"], na.rm = TRUE)
-
+var(movies$PR[movies$first_actor_gender == "male"], na.rm = TRUE)
+var(movies$PR[movies$first_actor_gender == "female"], na.rm = TRUE)
 
 ```
 
@@ -457,7 +457,7 @@ table(movies$genre2)
 
 **Your Answer:**
 
-The three most popular genres are **Drama (455)**, **Comedy (195)**, and **Thriller (127)**. All other genres (Action, Adventure, Documentary, Horror, etc.) are grouped into a single **"Other"** category, which contains 132 movies. The resulting frequency table for `genre2` is: Drama 455, Comedy 195, Other 132, Thriller 127.
+The three most popular genres are Drama (455), Comedy (195), and Thriller (127). All other genres (Action, Adventure, Documentary, Horror, etc.) are grouped into a single "Other" category, which contains 132 movies. The resulting frequency table for `genre2` is: Drama 455, Comedy 195, Other 132, Thriller 127.
 
 ### step b
 ```{r}
@@ -473,37 +473,30 @@ axis(1, at = 1:nrow(means), labels = means$genre2)
 
 **Your Answer:**
 
-Drama has by far the highest mean PR (≈18.6), while Comedy, has the lowest (≈3.1), with Thriller (≈4.6) and Other (≈3.5) in between. Drama's high mean is driven by some extreme outliers within that genre (a small number of very profitable dramas, consistent with the strong right-skew seen throughout the PR variable) rather than by dramas being reliably more profitable on average.
+Drama has by far the highest mean PR at 18.6, while Comedy has the lowest at 3.1, with Thriller at 4.6 and Other at 3.5 in between. Drama's high mean is driven by some extreme outliers within that genre (a small number of very profitable dramas, consistent with the strong right-skew seen throughout the PR variable) rather than by dramas being reliably more profitable on average.
 
 ### step c
 ```{r}
-library(dplyr)
+genres <- sort(unique(movies$genre2))
+means <- tapply(movies$PR, movies$genre2, mean, na.rm = TRUE)
 
-summary_stats <- movies %>%
-  group_by(genre2) %>%
-  summarise(
-    n = sum(!is.na(PR)),
-    mean_PR = mean(PR, na.rm = TRUE),
-    se = sd(PR, na.rm = TRUE) / sqrt(n),
-    lower = mean_PR - qt(0.975, n - 1) * se,
-    upper = mean_PR + qt(0.975, n - 1) * se
-  )
-summary_stats
+ci <- sapply(genres, function(g) {
+  x <- movies$PR[movies$genre2 == g]
+  x <- x[!is.na(x)]
+  qt(0.975, length(x) - 1) * sd(x) / sqrt(length(x))
+})
 
-plot(1:nrow(summary_stats), summary_stats$mean_PR, xaxt = "n",
-     ylim = c(min(summary_stats$lower), max(summary_stats$upper)),
+plot(1:4, means, xaxt = "n", pch = 19,
+     ylim = c(min(means - ci), max(means + ci)),
      xlab = "Genre", ylab = "Mean profitability ratio (PR)",
-     main = "Mean PR by Genre, with 95% CI",
-     pch = 19)
-axis(1, at = 1:nrow(summary_stats), labels = summary_stats$genre2)
-arrows(1:nrow(summary_stats), summary_stats$lower,
-       1:nrow(summary_stats), summary_stats$upper,
-       angle = 90, code = 3, length = 0.05)
+     main = "Mean PR by Genre, with 95% CI")
+axis(1, at = 1:4, labels = genres)
+arrows(1:4, means - ci, 1:4, means + ci, angle = 90, code = 3, length = 0.05)
 ```
 
 **Your Answer:**
 
-The 95% confidence intervals are: Comedy (2.10, 4.13), Drama (−11.04, 48.34), Other (2.17, 4.77), Thriller (2.41, 6.79). Drama's interval is enormously wide and even dips below zero, reflecting the huge variance in PR within that genre driven by a few extreme high-profit outliers. The other three genres have comparatively narrow, more stable intervals.
+The 95% confidence intervals are: Comedy (2.10, 4.13), Drama (-11.04, 48.34), Other (2.17, 4.77), Thriller (2.41, 6.79). Drama's interval is enormously wide and even dips below zero, reflecting the huge variance in PR within that genre driven by a few extreme high-profit outliers. The other three genres have comparatively narrow, more stable intervals.
 
 ### step d
 ```{r}
@@ -533,6 +526,8 @@ arrows(1:length(genres_sub), means_sub - ci_sub,
 means_sub
 ci_sub
 ```
+
+**Your Answer:**
 
 With only 100 movies (roughly 16 Comedy, 38 Drama, 13 Thriller, 7 Other), every confidence interval is noticeably wider than in step c. This is a direct illustration of a core statistics concept, smaller samples give less precise estimates, so the same true population means are now reprented with wider confidence intervals, meaning less confidence about the estimated mean to the true mean. 
 
