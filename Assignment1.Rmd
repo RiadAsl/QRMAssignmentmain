@@ -63,7 +63,7 @@ Each week consists of 1, 2, or 3 subquestions. The total amount of points you ca
 1.  Find the dataset “movies5.tsv” on Canvas. Describe your data set: How many observations does it have. How many variables are there? How many subjects? What consists of a subject? \textbf{[4 points]}
 
 ```{r}
-movies <- read.delim("movies5.csv")   # or "movies5.tsv", matching file name
+movies <- read.delim("movies5.tsv")   
 dim(movies)                           # 909 observations, 19 variables
 length(unique(movies$index))          # 909 distinct movies = subjects
 ```
@@ -191,10 +191,10 @@ summary(movies$PR)
 
 **Your Answer:**
 
-## Step f
+# Step f
 
 
-The boxplot is heavily right-skewed. The box is squashed near the bottom while a long tail of outliers stretches up to 5330, so we added a zoomed version without outliers to show the box clearly.From the data we can see that Q1= 0.52, Q2 (Median) = 1.75, Q3 = 3.63 and Q4 = 5330.34, which is the maximum since Q4 marks the upper end of the data. This data shows that making money in the movie industry is very uneven. A typical film earns back less than twice its budget and a quarter earn back barely half, while the high average profitability comes from a small number of extreme hits.
+The boxplot is heavily right-skewed. The box is squashed near the bottom while a long tail of outliers stretches up to 5330.From the data we can see that Q1= 0.52, Q2 (Median) = 1.75, Q3 = 3.63 and Q4 = 5330.34, which is the maximum since Q4 marks the upper end of the data. This data shows that making money in the movie industry is very uneven. A typical film earns back less than twice its budget and a quarter earn back barely half, while the high average profitability comes from a small number of extreme hits.
 
 
 
@@ -203,7 +203,7 @@ The boxplot is heavily right-skewed. The box is squashed near the bottom while a
 
 **Your Answer**
 
-Write your formulated response here.
+Our data set is a sample, not the full population. It contains only 909 movies, while the number of films released worldwide between 1990 and 2016 is far larger, in the tens of thousands. The name movies5 also suggests it is one selection out of a bigger database. The full population is all the movies released between 1990 and 2016, which would be extremely hard / impossible to correctly trace. 
 
 
 2 Let M be the event that a movie director is male. Let R be the runtime of the movie. 
@@ -224,7 +224,7 @@ mean(movies$director_gender == "female", na.rm = TRUE)   # 0.0951
 
 **Your Answer:**
 
-In our data 780 directors are male and 82 are female, while 47 movies have a missing value for director gender. Leaving the missing ones out we have 862 usable observations, so P(M) = 780/862 = 0.905.P(M') = 1 - 0.905 = 0.095. 
+In our data 780 directors are male and 82 are female, while 47 movies have a missing value for director gender. Leaving the missing ones out we have 862 usable observations, so P(M) = 780/862 = 0.905. P(M') = 1 - 0.905 = 0.095, so 82/862.
 
 
 *step b*
@@ -236,7 +236,7 @@ pnorm(120, mean = 107, sd = 22) - pnorm(90, mean = 107, sd = 22)
 
 **Your Answer:**
 
-Assuming R is normally distributed with a mean of 107 and a standard deviation of 22, we standardise both bounds and take the difference of the cumulative probabilities. This gives = 0.503, so under these assumptions a bit over half of all movies would have a runtime between 90 and 120 minutes.
+Assuming R is normally distributed with a mean of 107 and a standard deviation of 22, we standardise both bounds and take the difference of the cumulative probabilities. This gives P(90 <= R <= 120) = 0.503, so under these assumptions a bit over half of all movies would have a runtime between 90 and 120 minutes.
 
 *step c*
 
@@ -248,19 +248,19 @@ sd(movies$runtime)
 
 **Your Answer:**
 
-Empirically P(90 <= R <= 120) = 0.667, compared to the 0.503 predicted in 2b. The assumed distribution therefore underestimates how concentrated these runtimes are in reality. The standard deviation is the most suspect assumption: the sample value is 19.91 rather than 22, so the assumed distribution is too wide. 
+Empirically P(90 <= R <= 120) = 0.667, compared to the 0.503 predicted in 2b. The assumed distribution therefore underestimates how concentrated these runtimes are in reality. The standard deviation is the most suspect assumption: the sample value is 19.91 rather than 22, so the assumed distribution is too wide. The assumed mean of 107 is accurate, since the sample mean is 107.0.
 
 *step d*
 
 ```{r}
-notmale <- movies[movies$director_gender == "female", ]
+notmale <- movies[movies$director_gender == "female" & !is.na(movies$director_gender), ]
 p_d <- mean(notmale$runtime >= 120, na.rm = TRUE)
 p_d
 
 ```
 
 **Your Answer:**
-Restricting to the 82 movies with a female director, P(R ≥ 120 | M′) ≈ 0.207 — about 21% of movies directed by women run 120 minutes or longer.
+Restricting to the 82 movies with a female director, P(R ≥ 120 | M′) ≈ 0.207, about 21% of movies directed by women run 120 minutes or longer.
 
 
 3 For this question, you will again use the profitability ratio PR. Make sure that PR is defined the same way as in question 3d of week 1. For this question, you will assume that your data set is the full population.  
@@ -280,12 +280,12 @@ mean(movies$PR, na.rm = TRUE)
 
 **Your Answer:**
 
-Assuming the dataset is the full population, the population mean of PR is [value from code, e.g. 10.97]. This is the average profitability ratio across all movies with a valid PR value.
+Assuming the dataset is the full population, the population mean of PR is 10.97. This is the average profitability ratio across all movies with a valid PR value.
 
 *step b*
 
 ```{r}
-#set.seed(123)   # for reproducibility
+set.seed(123)
 movies_sample <- movies[sample(nrow(movies), 25), ]
 mean(movies_sample$PR, na.rm = TRUE)
 
@@ -293,7 +293,7 @@ mean(movies_sample$PR, na.rm = TRUE)
 
 **Your Answer:**
 
-A random sample of 25 movies was drawn from the dataset. The mean PR in this sample is [value from code]. Comparing it to the population mean of [value from 3a], the sample mean is [higher/lower] — this difference reflects sampling variability. Because only 25 of the 909 movies were sampled, the sample mean will typically deviate from the population mean, sometimes substantially given the heavy right-skew of PR.
+A random sample of 25 movies was drawn from the dataset. The mean PR in this sample is 3.08. Comparing it to the population mean of 10.97, the sample mean is lower, this difference reflects sampling variability. Because only 25 of the 909 movies were sampled, the sample mean will typically deviate from the population mean, sometimes substantially given the heavy right-skew of PR.
 
 *step c*
 
@@ -326,25 +326,18 @@ hist(sample_means,
 
 **Your Answer:**
 
-The 100 sample means have:
+The 100 sample means have a mean of 6.64 and a standard deviation of 33.35. The mean is not far off the population mean of 10.97, which we expect since the sample mean is an unbiased estimator.
 
-Mean = [value] — this should be close to the population mean from 3a.
-
-Standard deviation ≈ [value] — this is the standard error of the sample mean.
-
-Shape: approximately bell-shaped / normal, though with only 100 samples it may look slightly skewed or lumpy. Despite PR itself being heavily right-skewed, the distribution of the sample mean is much more symmetric — this is the Central Limit Theorem in action.
-
+The histogram is right skewed rather than bell shaped. Most of the sample means sit at low values while a few are much larger, because any sample that happens to include one of PR's extreme outliers gets pulled far upward. With only 25 movies per sample this skew has not averaged out.
 
 
 *step e*
 
 **Your Answer:**
 
-<<<<<<< Updated upstream
-By the CLT, the sampling distribution of the mean should be approximately Normal(true mean  = 10.97, standard deviation = population SD / √25). With a population SD of =198, that gives an expected standard deviation of the sample mean of =39.6. Comparing to part d: the simulated mean (=7.8) is somewhat below the CLT-predicted 10.97, and the simulated SD (=29.9) is smaller than the predicted 39.6. 
-=======
-By the CLT, the sampling distribution of the mean should be approximately Normal(μ = 10.97, σ = population SD / √25). With a population SD of ≈198, that gives an expected standard deviation of the sample mean of ≈39.6. Comparing to part d: the simulated mean (≈7.8) is somewhat below the CLT-predicted 10.97, and the simulated SD (≈29.9) is smaller than the predicted 39.6. More importantly, the simulated distribution is visibly skewed rather than normal-shaped. This is expected: the CLT's normal approximation requires either a genuinely normal population or a "sufficiently large" n, and PR's population distribution is extremely right-skewed with rare massive outliers — n = 25 is not large enough here to fully wash out that skew, so the sampling distribution of the mean still shows some skew and won't perfectly match the CLT's normal prediction in a finite simulation of only 100 samples.
->>>>>>> Stashed changes
+
+By the CLT the sample mean should follow approximately a normal distribution with expected value equal to the population mean of 10.97 and standard deviation equal to the population SD divided by sqrt(25). The population SD of PR is 198, so the predicted standard error is 198 / 5 = 39.6. Comparing this to part d, the simulated mean of 7.8 is somewhat below the predicted 10.97 and the simulated SD of 29.9 is smaller than the predicted 39.6. The simulated distribution is also clearly skewed rather than normal.
+
 
 # Week 3 
 
@@ -455,98 +448,6 @@ c. Recreate the scatter plot, but now add bars around each point, indicating the
 d. Now, create a new data frame which is a random subsample of n=100 of your full data frame. Recreate the plot in c.) How do the confidence intervals compare to the confidence intervals you plotted in c.)? \textbf{[2 points]}
 
 
-*step a*
-
-```{r}
-top3 <- names(sort(table(movies$genre), decreasing = TRUE))[1:3]
-movies$genre2 <- ifelse(movies$genre %in% top3, movies$genre, "Other")
-table(movies$genre2)
-
-
-```
-
-The three most popular genres are Drama (455), Comedy (195), and Thriller (127). All other genres. Are grouped into a single other category, which contains 132 movies. The resulting frequency table for genre2 is: Drama 455, Comedy 195, Other 132, Thriller 127.
-
-Write your formulated response here.
-
-*step b*
-
-```{r}
-means <- aggregate(PR ~ genre2, data = movies, FUN = mean, na.rm = TRUE)
-means
-
-plot(1:nrow(means), means$PR, xaxt = "n",
-     xlab = "Genre", ylab = "Mean profitability ratio (PR)",
-     main = "Mean PR by Genre",
-     pch = 19)
-axis(1, at = 1:nrow(means), labels = means$genre2)
-
-
-```
-
-Drama has by far the highest mean PR 18.6, while Comedy has the lowest 3.1, with Thriller 4.6 and other 3.5 in between. Drama's high mean is driven by extreme outliers within that genre a small number of very profitable dramas, consistent with the strong right-skew seen throughout the PR variable rather than by dramas being reliably more profitable on average.
-
-*step c*
-
-```{r}
-library(dplyr)
-
-summary_stats <- movies %>%
-  group_by(genre2) %>%
-  summarise(
-    n = sum(!is.na(PR)),
-    mean_PR = mean(PR, na.rm = TRUE),
-    se = sd(PR, na.rm = TRUE) / sqrt(n),
-    lower = mean_PR - qt(0.975, n - 1) * se,
-    upper = mean_PR + qt(0.975, n - 1) * se
-  )
-summary_stats
-
-plot(1:nrow(summary_stats), summary_stats$mean_PR, xaxt = "n",
-     ylim = c(min(summary_stats$lower), max(summary_stats$upper)),
-     xlab = "Genre", ylab = "Mean profitability ratio (PR)",
-     main = "Mean PR by Genre, with 95% CI",
-     pch = 19)
-axis(1, at = 1:nrow(summary_stats), labels = summary_stats$genre2)
-arrows(1:nrow(summary_stats), summary_stats$lower,
-       1:nrow(summary_stats), summary_stats$upper,
-       angle = 90, code = 3, length = 0.05)
-
-
-```
-The 95% confidence intervals are: Comedy (2.10, 4.13), Drama (−11.04, 48.34), Other (2.17, 4.77), Thriller (2.41, 6.79). Drama's interval is enormously wide and even dips below zero, reflecting the huge variance in PR within that genre driven by a few extreme high-profit outliers. The other three genres have comparatively narrow, more stable intervals.
-
-*step d*
-
-```{r}
-set.seed(1)
-movies_sub100 <- movies[sample(nrow(movies), 100), ]
-
-summary_stats_sub <- movies_sub100 %>%
-  group_by(genre2) %>%
-  summarise(
-    n = sum(!is.na(PR)),
-    mean_PR = mean(PR, na.rm = TRUE),
-    se = sd(PR, na.rm = TRUE) / sqrt(n),
-    lower = mean_PR - qt(0.975, n - 1) * se,
-    upper = mean_PR + qt(0.975, n - 1) * se
-  )
-summary_stats_sub
-
-plot(1:nrow(summary_stats_sub), summary_stats_sub$mean_PR, xaxt = "n",
-     ylim = c(min(summary_stats_sub$lower), max(summary_stats_sub$upper)),
-     xlab = "Genre", ylab = "Mean profitability ratio (PR)",
-     main = "Mean PR by Genre, Subsample n = 100",
-     pch = 19)
-axis(1, at = 1:nrow(summary_stats_sub), labels = summary_stats_sub$genre2)
-arrows(1:nrow(summary_stats_sub), summary_stats_sub$lower,
-       1:nrow(summary_stats_sub), summary_stats_sub$upper,
-       angle = 90, code = 3, length = 0.05)
-
-
-```
-## Week 3, Question 3
-
 ### step a
 ```{r}
 top3 <- names(sort(table(movies$genre), decreasing = TRUE))[1:3]
@@ -572,7 +473,7 @@ axis(1, at = 1:nrow(means), labels = means$genre2)
 
 **Your Answer:**
 
-**Drama** has by far the highest mean PR (≈18.6), while **Comedy** has the lowest (≈3.1), with Thriller (≈4.6) and Other (≈3.5) in between. Drama's high mean is driven by extreme outliers within that genre (a small number of very profitable dramas, consistent with the strong right-skew seen throughout the PR variable) rather than by dramas being reliably more profitable on average.
+Drama has by far the highest mean PR (≈18.6), while Comedy, has the lowest (≈3.1), with Thriller (≈4.6) and Other (≈3.5) in between. Drama's high mean is driven by some extreme outliers within that genre (a small number of very profitable dramas, consistent with the strong right-skew seen throughout the PR variable) rather than by dramas being reliably more profitable on average.
 
 ### step c
 ```{r}
@@ -609,36 +510,33 @@ The 95% confidence intervals are: Comedy (2.10, 4.13), Drama (−11.04, 48.34), 
 set.seed(1)
 movies_sub100 <- movies[sample(nrow(movies), 100), ]
 
-summary_stats_sub <- movies_sub100 %>%
-  group_by(genre2) %>%
-  summarise(
-    n = sum(!is.na(PR)),
-    mean_PR = mean(PR, na.rm = TRUE),
-    se = sd(PR, na.rm = TRUE) / sqrt(n),
-    lower = mean_PR - qt(0.975, n - 1) * se,
-    upper = mean_PR + qt(0.975, n - 1) * se
-  )
-summary_stats_sub
+genres_sub <- sort(unique(movies_sub100$genre2))
+means_sub <- tapply(movies_sub100$PR, movies_sub100$genre2, mean, na.rm = TRUE)
 
-plot(1:nrow(summary_stats_sub), summary_stats_sub$mean_PR, xaxt = "n",
-     ylim = c(min(summary_stats_sub$lower), max(summary_stats_sub$upper)),
-     xlab = "Genre", ylab = "Mean profitability ratio (PR)",
-     main = "Mean PR by Genre, Subsample n = 100",
-     pch = 19)
-axis(1, at = 1:nrow(summary_stats_sub), labels = summary_stats_sub$genre2)
-arrows(1:nrow(summary_stats_sub), summary_stats_sub$lower,
-       1:nrow(summary_stats_sub), summary_stats_sub$upper,
+ci_sub <- sapply(genres_sub, function(g) {
+  x <- movies_sub100$PR[movies_sub100$genre2 == g]
+  x <- x[!is.na(x)]
+  qt(0.975, length(x) - 1) * sd(x) / sqrt(length(x))
+})
+
+plot(1:length(genres_sub), means_sub, xaxt = "n", pch = 16,
+     ylim = c(min(means_sub - ci_sub), max(means_sub + ci_sub)),
+     main = "Mean PR by genre, subsample of n = 100",
+     xlab = "Genre",
+     ylab = "Mean profitability ratio (PR)")
+
+axis(1, at = 1:length(genres_sub), labels = genres_sub)
+arrows(1:length(genres_sub), means_sub - ci_sub,
+       1:length(genres_sub), means_sub + ci_sub,
        angle = 90, code = 3, length = 0.05)
+
+means_sub
+ci_sub
 ```
 
-With only 100 movies (roughly 16 Comedy, 38 Drama, 13 Thriller, 7 Other), every confidence interval is noticeably wider than in step c, since standard error scales with 1/√n and each group now has far fewer observations. This is a direct illustration of a core statistical principle: smaller samples give less precise estimates, so the same true population means are now bracketed by much less certain intervals.
-
----
-
-Small note: your exact numbers in step d will differ depending on your random seed, so present them as illustrative rather than copying mine verbatim — run the code and report what you actually get. That's Week 3 complete; want to move on to Week 4's regression questions next?
+With only 100 movies (roughly 16 Comedy, 38 Drama, 13 Thriller, 7 Other), every confidence interval is noticeably wider than in step c. This is a direct illustration of a core statistics concept, smaller samples give less precise estimates, so the same true population means are now reprented with wider confidence intervals, meaning less confidence about the estimated mean to the true mean. 
 
 
-Write your formulated response here.
 
 # Week 4 
 
