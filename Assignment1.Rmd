@@ -1,7 +1,7 @@
 ---
 title: "QRM II Graded Assignment (1)"
 subtitle: "Period 1, 2026"
-author: "Riad Aslanli 2775697, Theodor Kubicka 2847510, Barna Sebestyen 2896448"
+author: "Riad Aslanli 2775697, Theodor Kubicka 2847510, Barna Sebestyen 2896448, Omar El NAwawi,Jeroen Warnaar"
 date:  "`r format(Sys.Date(), '%d-%m-%Y')`"
 output:
   pdf_document:
