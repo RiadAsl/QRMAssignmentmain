@@ -4,9 +4,8 @@ subtitle: "Period 1, 2026"
 author: "Riad Aslanli 2775697, Theodor Kubicka 2847510, Barna Sebestyen 2896448, Omar El NAwawi,Jeroen Warnaar"
 date:  "`r format(Sys.Date(), '%d-%m-%Y')`"
 output:
-  pdf_document:
-    number_sections: true
   html_document:
+    number_sections: true
     df_print: paged
 header-includes:
 - "\\setcounter{section}{-1}"
