@@ -1,12 +1,15 @@
 ---
 title: "QRM II Graded Assignment (1)"
-subtitle: "Period 1, 2026"
-author: "Riad Aslanli 2775697, Theodor Kubicka 2847510, Barna Sebestyen 2896448, Omar El NAwawi,Jeroen Warnaar"
-date:  "`r format(Sys.Date(), '%d-%m-%Y')`"
+author: Riad Aslanli 2775697, Theodor Kubicka 2847510, Barna Sebestyen 2896448, Omar
+  El Nawawi,Jeroen Warnaar
+date: "`r format(Sys.Date(), '%d-%m-%Y')`"
 output:
+  word_document: default
   html_document:
     number_sections: true
     df_print: paged
+  pdf_document: default
+subtitle: Period 1, 2026
 header-includes:
 - "\\setcounter{section}{-1}"
 - |
@@ -16,7 +19,6 @@ header-includes:
     showtabs = false,
     breaklines,
     commandchars=\\\{\}
-  }
 format:
   html:
     code-overflow: wrap
@@ -546,46 +548,52 @@ g. Based on your analysis in f.), estimate your model again, but remove any outl
 *step a*
 
 ```{r}
-#WRITE YOUR CODE HERE
+model <- lm(PR ~ budget, data = movies)
+summary(model)
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+To test Chantal's claim we estimate a simple linear regression of the profitability ratio on the budget. Chantal is saying that the budget has no effect on PR, which in this model means that beta 1 would be equal to 0.
+
+The model is estimated on the 724 movies that have a valid PR. The estimated intercept is 18.57 and the estimated slope is -1.859e-07, with a residual standard error of about 198.1 on 722 degrees of freedom and an R-squared of 0.0016.
 
 *step b*
 
 ```{r}
-#WRITE YOUR CODE HERE
+coef(model)
+coef(model)[2] * 1000000   # effect of a 1 million increase in budget
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+The estimated value of beta1 is -1.859e-07. This is the predicted change in the profitability ratio when the budget increases by one dollar, so an extra dollar of budget is associated with a decrease in PR of 0.0000001859. This number looks tiny because budget is measured in single dollars. It is easier to interpret in millions: an increase in budget of 1 million dollars is associated with a predicted fall in PR of about 0.19. The sign is negative, which would suggest that more expensive movies are slightly less profitable relative to their budget, but the effect is very small and the R-squared of 0.0016 shows that budget explains almost none of the variation in PR.
 
 *step c*
 
 ```{r}
-#WRITE YOUR CODE HERE
+summary(model)$coefficients 
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+H0: beta1 = 0 against H1: beta1 is not equal to 0, with a significance level of alpha = 0.05.
+The t-statistic is t = -1.859e-07 / 1.728e-07 = -1.075 with n - k - 1 = 722 degrees of freedom, and the corresponding p-value is 0.2825. Since 0.2825 is much larger than 0.05 we do not reject H0. There is no significant evidence that the budget of a movie has any effect on its profitability ratio PR.
 
 *step d*
 
 ```{r}
-#WRITE YOUR CODE HERE
+#Not Needed
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+Based on this model Chantal is correct. The slope is not significantly different from zero and the R-squared of 0.0016 means that budget explains only about 0.16 percent of the variation in the profitability ratio, so a bigger budget does not make a movie less profitable in relative terms. Bob's argument that the studio should focus on cheaper movies is not supported by this found data.
+We would therefore advise the studio not to decide on budgets based on the profitability ratio alone, since budget size appears to tell us almost nothing about how profitable a film will be. However, this conclusion should be treated with caution because the model is based on a PR variable with extreme outliers, like the Tarnation movie discusses earlier. 
 
 *step e*
 

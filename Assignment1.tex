@@ -6,7 +6,7 @@
 \usepackage{xcolor}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb}
-\setcounter{secnumdepth}{5}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -102,7 +102,6 @@
   showtabs = false,
   breaklines,
   commandchars=\\\{\}
-}
 
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -113,7 +112,7 @@
 \makeatother
 \hypersetup{
   pdftitle={QRM II Graded Assignment (1)},
-  pdfauthor={Riad Aslanli 2775697, Theodor Kubicka 2847510, Barna Sebestyen 2896448, Omar El NAwawi,Jeroen Warnaar},
+  pdfauthor={Riad Aslanli 2775697, Theodor Kubicka 2847510, Barna Sebestyen 2896448, Omar El Nawawi,Jeroen Warnaar},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
@@ -126,7 +125,7 @@
 \makeatother
 \subtitle{Period 1, 2026}
 \author{Riad Aslanli 2775697, Theodor Kubicka 2847510, Barna Sebestyen
-2896448, Omar El NAwawi,Jeroen Warnaar}
+2896448, Omar El Nawawi,Jeroen Warnaar}
 \date{27-09-2026}
 
 \begin{document}
@@ -580,7 +579,7 @@ even and the remaining 36 percent lost money.
 \end{Shaded}
 
 \begin{verbatim}
-##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max.      NA's 
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max.       NAs 
 ##    0.0000    0.5228    1.7504   10.9690    3.6318 5330.3394       185
 \end{verbatim}
 
