@@ -586,7 +586,7 @@ The t-statistic is t = -1.859e-07 / 1.728e-07 = -1.075 with n - k - 1 = 722 degr
 *step d*
 
 ```{r}
-
+# no code needed for this step
 
 ```
 
@@ -758,26 +758,46 @@ predict(model_c, newdata = new_movie, interval = "prediction", level = 0.95)
 
 **Your Answer:**
 
-We estimate revenue on budget, runtime, genre2, year of release and month of release. We drop the movies where budget or revenue is recorded as 0, since we established in week 1 that those zeros are missing values rather than real ones, which leaves 629 movies. The R-squared is 0.49, so the model explains about half of the variation in revenue, and budget is by far the strongest predictor, with a coefficient of 2.60, meaning every extra dollar of budget is associated with an increase of 2.60 dollars of revenue. For a Comedy released in May 2026 with a budget of 40 million and a runtime of 160 minutes, the predicted revenue is about 195.9 million dollars. The 95 percent prediction interval goes from about -64.3 million to 456.0 million.
+We estimate revenue on these- budget, runtime, genre2, year of release and month of release. We drop the movies where budget or revenue is recorded as 0, since we outlines earlier in week 1 that those zeros are missing values rather than real ones, which leaves 629 movies. The R-squared is 0.49, so the model explains about half of the variations in revenue, and budget is by far the strongest predictor, with a coefficient of 2.60, meaning every extra dollar of budget is associated with an increase of 2.60 dollars of revenue. For a Comedy released in May 2026 with a budget of 40 million and a runtime of 160 minutes, the predicted revenue is about 195.9 million dollars. The 95 percent prediction interval goes from about -64.3 million to 456.0 million.
 
 The interval is extremely wide and its lower bound is negative, which is impossible for revenue. This shows the model is not very useful for predicting one individual film. We should also note that 2026 lies well outside the range of our data, which only runs from 1990 to 2016, so the model is predicting for a year it has no data on at all.
 
 *step d*
 
 ```{r}
-#WRITE YOUR CODE HERE
+par(mfrow = c(1, 2))
+
+plot(movies_rev$budget, resid(model_c),
+     main = "Residuals against budget",
+     xlab = "Budget", ylab = "Residual")
+abline(h = 0, col = "red")
+
+plot(movies_rev$runtime, resid(model_c),
+     main = "Residuals against runtime",
+     xlab = "Runtime (minutes)", ylab = "Residual")
+abline(h = 0, col = "red")
+
+par(mfrow = c(1, 1))
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+Yes, there is evidence of heteroskedasticity, and it comes from budget rather than runtime. In the plot against budget the residuals form a clear fan shape. For cheap films the points sit in a dense narrow shape close to the zero line, while as the budget grows the points spread further and further out, reaching roughly plus or minus 400 million at the top end. The spread of the errors therefore depends on the budget, which breaks the assumption that the variance of the erros is constant.
+
+The plot against runtime looks different. The points form a fairly even band around zero across the whole range, with no obvious widening as films get longer, so runtime does not appear to cause the same problem. This makes sense, since a film costing 250 million can miss the prediction by hundreds of millions while a film costing 2 million simply cannot. 
 
 *step e*
 
 ```{r}
-#WRITE YOUR CODE HERE
+movies$english <- ifelse(movies$original_language == "en", 1, 0)
+table(movies$english)
+
+model_e <- lm(PR ~ english + log(budget) + genre2 + release_year, data = movies)
+summary(model_e)
 
 ```
 
+**Your Answer:**
 
+We add a dummy variable named english which equals 1 if the original language of the movie is English and 0 otherwise, and we keep the controls from part b so that we compare films with a similar budget, genre and year. H0: beta_english = 0 against H1: beta_english is not equal to 0, with alpha = 0.05. The estimated coefficient on english is 30.97 with a standard error of 35.51, giving t = 0.87 and a p-value of 0.383. Since 0.383 is far above 0.05 we do not reject H0. There is no significant evidence that the language spoken affects the profitability ratio.  The raw average PR of English films (11.36) does look higher than that of non English films (2.20), but that gap is not statistically very significant once we adjust for the budget, genre and year, and it is inflated by the same extreme outliers we have seen throughout the earlier questions. We would also point out that only 31 of the 724 movies in our sample are not in English, so the test has a very little n and is thus not a great sample, and we cannot say much with confidence either way. Based on this analysis there is no statistical reason to stop the director from making the film in German with only german speaking actors. 
