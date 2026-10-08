@@ -694,18 +694,35 @@ e. The movie is set in Germany. The director wants to make the movie with only g
 *step a*
 
 ```{r}
-#WRITE YOUR CODE HERE
+years <- sort(unique(movies$release_year))
+
+means_yr <- tapply(movies$PR, movies$release_year, mean, na.rm = TRUE)
+
+ci_yr <- sapply(years, function(y) {
+  x <- movies$PR[movies$release_year == y]
+  x <- x[!is.na(x)]
+  qt(0.975, length(x) - 1) * sd(x) / sqrt(length(x))
+})
+
+plot(years, means_yr, pch = 16,
+     ylim = c(min(means_yr - ci_yr), max(means_yr + ci_yr)),
+     main = "Mean PR by year of release, with 95% confidence intervals",
+     xlab = "Year of release",
+     ylab = "Mean profitability ratio (PR)")
+arrows(years, means_yr - ci_yr, years, means_yr + ci_yr,
+       angle = 90, code = 3, length = 0.05)
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+There is no clear time trend in the profitability ratio. For almost every year the mean PR sits somewhere between about 2 and 7, and the confidence intervals of the different years overlap each other heavily, so we cannot say that movies became more or less profitable over time. The one exception is 2003, where the mean jumps to 215 with an enormously wide confidence interval. This is again caused by Tarnation, which was released in 2003 and has a PR of 5330. With only 25 usable movies in that year, that single film drags the whole yearly average up. The plot therefore mostly tells us how sensitive the mean PR is to the outliers  (tarnation) rather than showing any real changes or dveelopments over time.
 
 *step b*
 
 ```{r}
-#WRITE YOUR CODE HERE
+model_b <- lm(PR ~ log(budget) + genre2 + release_year, data = movies)
+summary(model_b)
 
 ```
 
