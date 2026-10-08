@@ -586,7 +586,7 @@ The t-statistic is t = -1.859e-07 / 1.728e-07 = -1.075 with n - k - 1 = 722 degr
 *step d*
 
 ```{r}
-#Not Needed
+
 
 ```
 
@@ -598,35 +598,47 @@ We would therefore advise the studio not to decide on budgets based on the profi
 *step e*
 
 ```{r}
-#WRITE YOUR CODE HERE
+hist(resid(model),
+     main = "Histogram of the residuals",
+     xlab = "Residual",
+     ylab = "Frequency")
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+The histogram is extremely right skewed. Around 600 of the residuals fall in the bar just below zero, since the regression predicts a PR of roughly 18.6 for almost every movie while most actual PR values are small. A second much smaller bar holds the films that did better than predicted, and then there is a single bar far out at about 5300, which belongs to the movie Tarnation with a PR of 5330.
+This gives us reason to doubt the model. One of the assumptions behind the regression is that the errors are normally distributed around zero, and a distribution with one huge positive residual and everything else packed on the other side is not very normal Because the standard errors and the p-value in step c are calculated under that assumption, they are not reliable here.
 
 *step f*
 
 ```{r}
-#WRITE YOUR CODE HERE
+h <- hatvalues(model)
+crit <- 2 * 2 / length(h)   # 2(k+1)/n with k = 1
+crit
+sum(h > crit)
+max(h)
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+With k = 1 explanatory variable and n = 724 observations, the critical value is 2(k+1)/n = 4/724 = 0.0055. There are 57 observations with a hatvalue above this, and the largest hatvalue is 0.0347, which belongs to Batman v Superman: Dawn of Justice and The Dark Knight Rises, both with a budget of 250 millions. There are a lot of high leverage observations. Since Hatvalues only depend on the explanatory variable, so these are the movies whose budget is far from average which here means the very expensive blockbusters.Tarnation does not appear, since its budget is small even though it caused the problem in step e. This gives us another reason to doubt the model, because a few very expensive films have a lot of disproportionate influence on where the regression line sits. 
 
 *step g*
 
 ```{r}
-#WRITE YOUR CODE HERE
+movies_sub <- movies[!is.na(movies$PR) & !is.na(movies$budget), ]
+movies_sub <- movies_sub[hatvalues(model) <= crit, ]
+
+model2 <- lm(PR ~ budget, data = movies_sub)
+summary(model2)
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+After removing the 57 high leverage observations, the model is estimated on 667 movies. The estimated slope is now -4.176e-07 with a standard error of 3.08e-07, giving a t value of -1.36 and a p-value of 0.176. The R-squared is 0.0028. Testing H0: beta1 = 0 against H1: beta1 is not equal to 0 at alpha = 0.05, the p-value of 0.176 is still well above 0.05, so we again do not reject H0. The slope is somewhat larger in absolute size than before but it is still not significantly different from zero, and budget still explains well under one percent of the variation in PR. Our advice to the studio in question d would therefore not change. Even after taking out the most influential observations there is no evidence that spending more on a movie lowers its profitability ratio, so Chantal's claim still holds and Bob's argument is not supported. The studio should not base budget decisions on the profitability ratio alone.
 
 2.
 
