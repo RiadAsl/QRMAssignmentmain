@@ -648,24 +648,36 @@ b. Using the insights from the scatterplot, your linear model, and your data, fi
 *step a*
 
 ```{r}
-#WRITE YOUR CODE HERE
+model3 <- lm(vote_average ~ runtime, data = movies)
+
+plot(movies$runtime, movies$vote_average,
+     main = "Average vote against runtime",
+     xlab = "Runtime (minutes)",
+     ylab = "Average vote")
+abline(model3, col = "red")
+
+summary(model3)
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+Based off the scatter plot we can say that it shows a weak positive association between runtime and the average vote. The fitted line is vote_average = 3.90 + 0.0197 * run time, so a movie that is 10 minutes longer is predicted to score about 0.2 points higher. The slope is highly significant with a p-value of 3.8e-23, but the R-squared is only 0.103, so runtime explains only about 10 percent of the variation in the average vote and there is a lot of scatter around the line.
 
 *step b*
 
 ```{r}
-#WRITE YOUR CODE HERE
+movies$pred_vote <- predict(model3, newdata = movies)
+movies$res_vote  <- movies$vote_average - movies$pred_vote
+
+head(movies[order(-movies$res_vote), c("title", "runtime", "vote_average", "pred_vote", "res_vote")], 5)
 
 ```
 
 **Your Answer:**
 
-Write your formulated response here.
+The largest positive residual fromn this belongs to Sardaarji, but we do not use it as our example because its runtime is recorded as 0 minutes, which means it must be another data error. The best genuine example is Star Wars: Clone Wars: Volume 1. It has a runtime of 69 minutes, so the model predicts a vote_average of 3.90 + 0.0197 * 69 = 5.26. Its actual vote_average is 8.0, which gives a residual of 8.0 - 5.26 = 2.74.
+This movie therefore vastly overperformed, scoring almost 2.7 points higher than a film of its length would be expected to score. It makes sense that the model misses here, since runtime says nothing about whether a film is actually any good, and short animated films in a popular franchise can be rated very highly despite being short in length. 
 
 # Week 5
   
